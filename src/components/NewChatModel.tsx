@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNewChatStore } from '@/stores/useNewChatStore';
 import Image from 'next/image';
 
+
 export default function NewChatModal() {
   const showNewChat = useNewChatStore((state) => state.showNewChat);
   const closeNewChat = useNewChatStore((state) => state.closeNewChat);
@@ -97,8 +98,11 @@ export default function NewChatModal() {
           My Chats
         </h2>
         <div
-          className="bg-green-500 p-2 rounded-lg cursor-pointer"
-          onClick={closeNewChat}
+          className="bg-green-500 p-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95"
+           onClick={() => {
+    closeNewChat(); 
+      window.location.reload();
+  }}
         >
           <Image src="/plus.png" alt="New Chat" width={20} height={20} />
         </div>
@@ -120,11 +124,14 @@ export default function NewChatModal() {
 
             return (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab as 'Chats' | 'Saved')}
-                className={`flex-1 px-2 py-2 sm:px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center justify-center gap-1
-                  ${isActive ? 'bg-[#F2EEEE0D] text-white border-b-2 border-white' : 'bg-transparent text-[#FFFFFF80]'}`}
-              >
+  key={tab}
+  onClick={() => setActiveTab(tab as 'Chats' | 'Saved')}
+  className={`flex-1 px-2 py-2 sm:px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ease-in-out flex items-center justify-center gap-1
+    ${isActive
+      ? 'bg-[#F2EEEE0D] text-white border-b-2 border-white shadow-md'
+      : 'bg-transparent text-[#FFFFFF80] hover:bg-[#ffffff0c] hover:text-white'}`}
+>
+
                 {/* Dot */}
                 <span
                   className={`h-2 w-2 rounded-full ${

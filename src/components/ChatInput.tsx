@@ -88,13 +88,23 @@ return (
             </div>
 
             {/* Send button */}
-            <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-[28px] h-[28px] sm:w-[32px] sm:h-[32px] flex items-center justify-center bg-[#000] rounded-full"
-              onClick={onSend}
-              type="button"
-            >
-              <Image src="/send.png" alt="Send" width={16} height={16} />
-            </button>
+            {/* Send button */}
+<button
+  onClick={onSend}
+  type="button"
+  className="
+    absolute right-2 top-1/2 -translate-y-1/2
+    w-[28px] h-[28px] sm:w-[32px] sm:h-[32px]
+    flex items-center justify-center
+    bg-gradient-to-r from-[#3FA738] to-[#6E1EA3]   /* green → purple */
+    rounded-[8px]                                  /* square w/ soft corners */
+    transition-transform duration-200 ease-in-out
+    hover:scale-105 active:scale-95                /* subtle interaction effect */
+  "
+>
+  <Image src="/send.png" alt="Send" width={16} height={16} />
+</button>
+
           </>
         )}
       </div>
