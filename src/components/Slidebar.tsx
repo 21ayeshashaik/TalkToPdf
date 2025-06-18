@@ -9,7 +9,8 @@ export default function Sidebar() {
   return (
       <div
   className={`
-    h-full flex flex-col justify-between items-center
+    h-screen sm:h-screen md:h-screen lg:h-screen min-h-screen
+ flex flex-col justify-between items-center
     py-4
     bg-black/10
     rounded-2xl

@@ -7,39 +7,54 @@ export default function AnimatedBlob() {
   const SVG_SIZE = 320;
  
   const CIRCLE_RADIUS = 0.32 * SVG_SIZE; // reduced from 0.45
-  const BLOB_RADIUS = 0.23 * SVG_SIZE;   // keep blob smaller accordingly
+  const BLOB_RADIUS = 0.18 * SVG_SIZE;   // keep blob smaller accordingly
   const ORBIT_RADIUS = 0.07 * SVG_SIZE;
   const CENTER = SVG_SIZE / 2;
 
   useEffect(() => {
     let req: number;
     let t = 0;
-    function animate() {
-      const points = 8;
-      const angleStep = (2 * Math.PI) / points;
-      const blobPath = [];
-      for (let i = 0; i < points; i++) {
-        const ang = i * angleStep;
-        const rad =
-          BLOB_RADIUS +
-          0.18 * BLOB_RADIUS * Math.sin(t + i * 1.5) +
-          0.12 * BLOB_RADIUS * Math.cos(t * 0.7 + i * 2.3) +
-          0.07 * BLOB_RADIUS * Math.sin(t * 0.2 + i * 3.1);
-        const x = CENTER + rad * Math.cos(ang);
-        const y = CENTER + rad * Math.sin(ang);
-        blobPath.push(`${i === 0 ? "M" : "L"}${x},${y}`);
-      }
-      blobPath.push("Z");
-      const orbAngle = t * 2.2;
-      const tx = ORBIT_RADIUS * Math.cos(orbAngle);
-      const ty = ORBIT_RADIUS * Math.sin(orbAngle);
-      if (blobRef.current) {
-        blobRef.current.setAttribute("d", blobPath.join(" "));
-        blobRef.current.setAttribute("transform", `translate(${tx},${ty})`);
-      }
-      t += 0.013;
-      req = requestAnimationFrame(animate);
-    }
+ function animate() {
+  const points = 60; // higher points for smoothness
+  const angleStep = (2 * Math.PI) / points;
+  const blobPath = [];
+
+  for (let i = 0; i < points; i++) {
+    const ang = i * angleStep;
+
+    // Radial modulation: closer to 1 at outer edge, 0 near center
+    const modulation = 0.5 + 0.5 * Math.sin(i * angleStep); // smooth blend
+    const smoothFactor = Math.pow(Math.sin(i * angleStep / 2), 2); // smooth ease-in/out
+
+    const irregularOffset =
+      0.12 * BLOB_RADIUS * Math.sin(t + i * 1.5) * smoothFactor +
+      0.08 * BLOB_RADIUS * Math.cos(t * 0.7 + i * 2.3) * smoothFactor +
+      0.04 * BLOB_RADIUS * Math.sin(t * 0.2 + i * 3.1) * smoothFactor;
+
+    const rad = BLOB_RADIUS + irregularOffset;
+
+    const x = CENTER + rad * Math.cos(ang);
+    const y = CENTER + rad * Math.sin(ang);
+
+    blobPath.push(`${i === 0 ? 'M' : 'L'}${x},${y}`);
+  }
+
+  blobPath.push('Z');
+
+  const orbAngle = t * 2.2;
+  const tx = ORBIT_RADIUS * Math.cos(orbAngle);
+  const ty = ORBIT_RADIUS * Math.sin(orbAngle);
+
+  if (blobRef.current) {
+    blobRef.current.setAttribute('d', blobPath.join(' '));
+    blobRef.current.setAttribute('transform', `translate(${tx},${ty})`);
+  }
+
+  t += 0.013;
+  req = requestAnimationFrame(animate);
+}
+
+
     req = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(req);
   }, [CENTER, BLOB_RADIUS, ORBIT_RADIUS]);
@@ -65,7 +80,7 @@ export default function AnimatedBlob() {
           <path
             ref={blobRef}
             fill="url(#blobGreenGray)"
-            opacity={0.95}
+            opacity={1}
             style={{ transition: "filter 0.3s" }}
             filter="url(#blobBlur)"
           />
@@ -77,14 +92,15 @@ export default function AnimatedBlob() {
               <stop offset="100%" stopColor="#3a036c" />
             </radialGradient>
             {/* Blob gradient (green and gray mix, bright center and green edge) */}
-            <radialGradient id="blobGreenGray" cx="40%" cy="60%" r="80%">
-              <stop offset="0%" stopColor="#CEC9C9" stopOpacity="0.96" />
-              <stop offset="60%" stopColor="#3FA738" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#3FA738" stopOpacity="0.7" />
-            </radialGradient>
+           <radialGradient id="blobGreenGray" cx="40%" cy="60%" r="80%">
+  <stop offset="0%" stopColor="#CEC9C9" stopOpacity="0.96" />
+  <stop offset="60%" stopColor="#6FBF73" stopOpacity="0.7" />
+  <stop offset="100%" stopColor="#3FA738" stopOpacity="0.4" />
+</radialGradient>
+
             {/* Glow filter */}
             <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="32" result="blur" />
+              <feGaussianBlur stdDeviation="16" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />
@@ -92,7 +108,7 @@ export default function AnimatedBlob() {
             </filter>
             {/* Soft blur for blob */}
             <filter id="blobBlur" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="32" />
+              <feGaussianBlur stdDeviation="14"/>
             </filter>
           </defs>
         </svg>

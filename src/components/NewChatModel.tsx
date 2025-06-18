@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNewChatStore } from '@/stores/useNewChatStore';
 import Image from 'next/image';
 
-
+ 
 export default function NewChatModal() {
   const showNewChat = useNewChatStore((state) => state.showNewChat);
   const closeNewChat = useNewChatStore((state) => state.closeNewChat);
@@ -77,36 +77,49 @@ export default function NewChatModal() {
   if (!showNewChat) return null;
 
   return (
-   <div
-  className="
-    fixed top-3 left-2 sm:left-4
-    w-[94vw] md:w-[356px]
-    h-[88vh] sm:h-[90vh]
-    rounded-[16px] sm:rounded-[20px]
-    bg-[#0000000D] backdrop-blur-[10px] 
-    px-3 py-2 sm:p-4 
-    z-50 overflow-hidden
-    shadow-[0px_3px_8px_3px_#35353533,inset_0px_2px_10px_5px_#35353533,inset_0px_0px_14px_0px_#FFFFFF40,inset_1px_3px_5px_0px_#FFFFFF40,inset_-1px_-3px_3px_0px_#FFFFFF1A]
-    flex flex-col
-  "
->
+    <div
+    className="
+      fixed top-3 left-2 sm:left-4
+      w-[94vw] md:w-[320px]
+      h-[88vh] sm:h-[90vh]
+      rounded-[16px] sm:rounded-[20px]
+      bg-[#0000000D] backdrop-blur-[10px] 
+      px-3 py-2 sm:p-4 pt-5 sm:pt-6  /* ✅ Added top padding */
+      z-50 overflow-hidden
+      shadow-[0px_3px_8px_3px_#35353533,inset_0px_2px_10px_5px_#35353533,inset_0px_0px_14px_0px_#FFFFFF40,inset_1px_3px_5px_0px_#FFFFFF40,inset_-1px_-3px_3px_0px_#FFFFFF1A]
+      flex flex-col
+    "
+  >
+   
+   <div className="flex justify-start mb-2 -mt-2 sm:-mt-4">
+  <button
+    className="p-2 rounded-lg hover:bg-[#ffffff14] transition"
+    onClick={closeNewChat}
+    aria-label="Close"
+  >
+    <Image
+      src="/exit.jpeg" 
+      alt="Exit"
+      width={20}
+      height={20}
+      className="object-contain"
+    />
+  </button>
+</div>
 
 
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4 mt-2 sm:mb-6 sm:mt-6">
-        <h2 className="text-[#F3F0F0] text-[22px] sm:text-[26px] font-medium tracking-[-0.17px]">
-          My Chats
-        </h2>
-        <div
-          className="bg-green-500 p-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95"
-           onClick={() => {
-    closeNewChat(); 
-      window.location.reload();
-  }}
-        >
-          <Image src="/plus.png" alt="New Chat" width={20} height={20} />
-        </div>
+    <div className="flex items-center justify-between mb-4 mt-2 sm:mb-6 sm:mt-6">
+      <h2 className="text-[#F3F0F0] text-[22px] sm:text-[26px] font-medium tracking-[-0.17px]">
+        My Chats
+      </h2>
+      <div
+        className="bg-green-500 p-2 rounded-lg cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95"
+        onClick={closeNewChat}
+      >
+        <Image src="/plus.png" alt="New Chat" width={20} height={20} />
       </div>
+    </div>
+      
 
       {/* Search */}
       <input

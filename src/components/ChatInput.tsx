@@ -19,7 +19,7 @@ return (
         isClicked ? 'w-full justify-start' : 'justify-center'
       }`}
     >
-      {/* Large Mic (only when not expanded) */}
+      
       {!isClicked && (
         <div
           onClick={() => setShowMic(true)}
@@ -76,7 +76,7 @@ return (
 
         {isClicked && (
           <>
-            {/* Small mic inside expanded input */}
+           
             <div
               className="absolute right-12 sm:right-14 top-1/2 -translate-y-1/2 cursor-pointer"
               onClick={(e) => {
@@ -87,7 +87,7 @@ return (
               <Image src="/microphone.png" alt="Mic" width={16} height={16} />
             </div>
 
-            {/* Send button */}
+           
             {/* Send button */}
 <button
   onClick={onSend}

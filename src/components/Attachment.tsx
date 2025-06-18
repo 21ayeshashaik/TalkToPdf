@@ -15,8 +15,14 @@ export default function Attachments() {
       px-4 py-3 sm:px-5 sm:py-4
       flex flex-wrap justify-around items-center gap-y-3
     ">
-      {/* Document Icon with Text */}
-      <div className="flex flex-col items-center gap-1 min-w-[100px]">
+      {/* Browse Documents Button */}
+      <div
+        className="
+          flex flex-col items-center gap-1 min-w-[100px] cursor-pointer
+          transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95
+          hover:bg-[#ffffff0a] rounded-lg px-2 py-1
+        "
+      >
         <Image
           src="/documents.png"
           alt="Document Icon"
@@ -29,8 +35,14 @@ export default function Attachments() {
         </p>
       </div>
 
-      {/* Drive Icon with Text */}
-      <div className="flex flex-col items-center gap-1 min-w-[100px]">
+      {/* Upload from Drive Button */}
+      <div
+        className="
+          flex flex-col items-center gap-1 min-w-[100px] cursor-pointer
+          transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95
+          hover:bg-[#ffffff0a] rounded-lg px-2 py-1
+        "
+      >
         <Image
           src="/drive.png"
           alt="Upload Icon"

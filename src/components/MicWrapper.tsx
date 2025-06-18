@@ -13,18 +13,15 @@ type MicWrapperProps = {
 export default function MicWrapper({ onClose, onStartGenerating }: MicWrapperProps) {
   const [stage, setStage] = useState<'mic' | 'generating' | 'result'>('mic');
 
-  // When mic is closed or 10s timeout, show generating
   const handleStartGenerating = () => {
     setStage('generating');
     setTimeout(() => setStage('result'), 5000);
-    // Optionally, call onStartGenerating if you need to
     onStartGenerating();
   };
 
-  // When mic is manually closed (cancel)
   const handleCloseMic = () => {
     setStage('generating');
-    setTimeout(() => setStage('result'), 5000);
+    setTimeout(() => setStage('result'), 3000);
     onClose();
   };
 
