@@ -1,103 +1,104 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useRef } from 'react';
+import NewChatModal from '@/components/NewChatModel';
+import Attachments from '@/components/Attachment';
+import Mic from '@/components/Mic';
+import Image from 'next/image';
+import MicWrapper from '@/components/MicWrapper';
+import AnimatedBlob from '@/components/AnimatedBlog';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [showAttachments, setShowAttachments] = useState(false);
+  const [activeTab, setActiveTab] = useState('Chats');
+  const [showMic, setShowMic] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+  // Ref for the upload button container
+  const uploadBtnRef = useRef<HTMLButtonElement>(null);
+
+  const handleMicClose = () => setShowMic(false);
+  const handleStartGenerating = () => {
+    setShowMic(false);
+    setIsGenerating(true);
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen w-full bg-black text-white font-inter relative">
+      <main className="flex-1 flex flex-col items-center justify-between relative">
+        {!isGenerating ? (
+          <>
+            {/* AnimatedBlob at the absolute top and centered */}
+            <div className="w-full flex flex-col items-center mt-10 sm:mt-14 md:mt-20">
+              <AnimatedBlob />
+            </div>
+
+            {/* Centered Text Section (hello, preethi etc) */}
+            <div className="flex-1 flex flex-col items-center justify-center -mt-24 sm:-mt-32 md:-mt-36">
+              <div className="flex flex-col items-center gap-3 w-[90vw] max-w-[370px] min-w-[170px]">
+                <p className="text-[#CEC9C9] text-center text-base sm:text-lg md:text-xl font-normal leading-tight">
+                  Hello, Preethi
+                </p>
+                <h2 className="text-[#CEC9C9] text-center text-lg sm:text-xl md:text-2xl font-medium leading-tight">
+                  How can I help you today?
+                </h2>
+              </div>
+            </div>
+
+            {/* Bottom Buttons */}
+            <div className="absolute left-1/2 bottom-8 transform -translate-x-1/2 flex gap-12 sm:gap-24 md:gap-[220px] lg:gap-[280px] w-full px-4 justify-center">
+              {/* Upload Button with relative container for Attachments popover */}
+              <div className="relative flex items-end">
+                <button
+                  ref={uploadBtnRef}
+                  onClick={() => setShowAttachments(!showAttachments)}
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full backdrop-blur-[10px] flex items-center justify-center"
+                  style={{
+                    background: '#0000000D',
+                    boxShadow:
+                      '0px 3px 8px 3px #3535351A, inset 0px 2px 10px 5px #3535351A, inset 0px 4px 14px 0px #FFFFFF26, inset 1px 3px 5px 0px #FFFFFF1A, inset -1px -3px 3px 0px #FFFFFF0D',
+                  }}
+                >
+                  <Image src="/upload.png" alt="Upload" width={36} height={36} className="mx-auto" />
+                </button>
+                {/* Attachments popover: right above the upload button */}
+                {showAttachments && (
+                  <div className="absolute bottom-[110%] left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0 mb-2 z-50">
+                    <Attachments />
+                  </div>
+                )}
+              </div>
+
+              {/* Mic Button */}
+              <div
+                onClick={() => setShowMic(true)}
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full backdrop-blur-[10px] flex items-center justify-center cursor-pointer"
+                style={{
+                  background: '#0000000D',
+                  boxShadow:
+                    '0px 3px 8px 3px #3535351A, inset 0px 2px 10px 5px #3535351A, inset 0px 4px 14px 0px #FFFFFF26, inset 1px 3px 5px 0px #FFFFFF1A, inset -1px -3px 3px 0px #FFFFFF0D',
+                }}
+              >
+                <Image
+                  src="/microphone.png"
+                  alt="Mic"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
+              </div>
+            </div>
+
+            {showMic && (
+              <Mic onClose={handleMicClose} onStartGenerating={handleStartGenerating} />
+            )}
+          </>
+        ) : (
+          <div className="flex-1 flex items-center justify-center">
+            <MicWrapper onClose={handleMicClose} onStartGenerating={handleStartGenerating} />
+          </div>
+        )}
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
