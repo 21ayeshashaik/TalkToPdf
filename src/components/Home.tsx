@@ -12,8 +12,8 @@ export default function ResultPageContent({ onMicClick }: { onMicClick: () => vo
   const [showNotification, setShowNotification] = useState(false);
 
   const fullText = `UI-UX stands for User Interface (UI) and User Experience (UX). Though they are closely related, they focus on different aspects of a product's design and usability.
-
-UI (User Interface): UI is about how a product looks. It includes visual design, such as buttons, icons,about how a product looks. It includes visual design, such as butto`;
+UI (User Interface): UI is about how a product looks. It includes visual design, such as buttons, icons,about how a product looks. It includes visual design, such as button UI-UX stands for User Interface (UI) and User Experience (UX). Though they are closely related, they focus on different aspects of a product's design and usability.
+UI (User Interface): UI is about how a product looks. It includes visual design, such as buttons,`;
 
   // Typing effect
   useEffect(() => {
@@ -37,10 +37,14 @@ UI (User Interface): UI is about how a product looks. It includes visual design,
     }, 3000);
     return () => clearTimeout(timeout);
   }, []);
+  useEffect(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}, []);
+
 
   return (
     <div className="flex flex-col h-screen w-full bg-black text-white font-inter relative">
-      <div className="flex-1 overflow-y-scroll pl-2 sm:pl-3 md:pl-5 pr-1 sm:pr-2 md:pr-4 pt-6"
+      <div className="flex-1 overflow-y-scroll pl-1 sm:pl-1 md:pl-5 pr-1 sm:pr-2 md:pr-4 pt-6"
            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <div className="flex flex-col items-center w-full max-w-[1100px] mx-auto">
 
@@ -74,27 +78,31 @@ UI (User Interface): UI is about how a product looks. It includes visual design,
             </div>
 
             {/* Answer bubble */}
-            <div className="w-full flex justify-start">
-              <div className="bg-transparent text-white px-3 sm:px-6 py-3 sm:py-4
-                rounded-[20px] flex flex-col justify-start
-                text-sm md:text-[16px] whitespace-pre-line
-                w-full max-w-[933px] min-h-[200px] transition-all duration-200">
-                <span className="font-semibold text-[16px] sm:text-[20px] mb-1 sm:mb-4 block">
-                  Definition of UI/UX
-                </span>
-                <div
-                  className="text-[14px] sm:text-[16px] leading-relaxed"
-                  style={{
-                    minHeight: '150px',
-                    whiteSpace: 'pre-wrap',
-                    fontFamily: 'inherit',
-                  }}
-                >
-                  {displayedText}
-                  {isTyping && <span className="animate-pulse">|</span>}
-                </div>
-              </div>
-            </div>
+<div className="w-full flex justify-start">
+  <div className="bg-transparent text-white px-3 sm:px-6 py-3 sm:py-4
+    rounded-[20px] flex flex-col justify-start
+    text-sm md:text-[16px] whitespace-pre-line
+    w-full max-w-[933px] min-h-[200px] transition-all duration-200
+    text-left"> {/* Ensures text starts from left */}
+    
+    <span className="font-semibold text-[16px] sm:text-[20px] mb-1 sm:mb-4 block">
+      Definition of UI/UX
+    </span>
+
+    <div
+      className="text-[14px] sm:text-[16px] leading-relaxed text-left"
+      style={{
+        minHeight: '150px', // Ensures enough height is reserved initially
+        whiteSpace: 'pre-wrap',
+        fontFamily: 'inherit',
+      }}
+    >
+      {displayedText}
+      {isTyping && <span className="animate-pulse">|</span>}
+    </div>
+  </div>
+</div>
+
 
           </div>
         </div>

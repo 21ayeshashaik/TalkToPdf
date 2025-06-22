@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen w-full bg-black text-white font-inter relative">
-      <main className="flex-1 flex flex-col items-center justify-between relative px-3 sm:px-5 md:px-8 lg:px-12">
+      <main className="flex-1 flex flex-col items-center justify-between relative px-1 sm:px-2 md:px-8 lg:px-12">
         {!isGenerating ? (
           <>
             {/* AnimatedBlob */}
@@ -45,7 +45,7 @@ export default function Home() {
             </div>
 
             {/* Bottom Buttons */}
-           <div className="absolute left-1/2 bottom-2 sm:bottom-4 transform -translate-x-1/2 flex gap-8 sm:gap-14 md:gap-24 lg:gap-36 w-full px-3 pb-4 sm:pb-6 md:pb-8 justify-center">
+           <div className="w-full left-2 bottom-2 sm:bottom-4 flex gap-8 sm:gap-14 md:gap-24 lg:gap-36 justify-center px-3 pb-4 sm:pb-6 md:pb-8 z-30">
 
               <div className="relative flex items-end">
                 <button

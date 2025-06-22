@@ -74,7 +74,7 @@ export default function Notification({
           absolute top-1.5 right-1.5 sm:top-2 sm:right-2 p-1 rounded-full
           hover:bg-white/10 transition
           text-white text-sm
-          focus:outline-none
+          focus:outline-none cursor:pointer
         "
       >
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none">

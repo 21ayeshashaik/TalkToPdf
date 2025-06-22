@@ -80,7 +80,7 @@ export default function NewChatModal() {
     <div
     className="
       fixed top-3 left-2 sm:left-4
-      w-[94vw] md:w-[320px]
+      w-[93vw] md:w-[300px]
       h-[88vh] sm:h-[90vh]
       rounded-[16px] sm:rounded-[20px]
       bg-[#0000000D] backdrop-blur-[10px] 
